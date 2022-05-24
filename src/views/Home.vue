@@ -2,11 +2,7 @@
   <div class="home">
     <div class="bigbox">
       <div class="box-top">{{ start }} {{ end }}</div>
-      <div ref="videos" class="box-videos">
-        <!-- <video v-for="(item,index) in streams" :key="index" autoplay muted="false" defaultMuted="false" class="video" ></video> -->
-      </div>
-      <!-- <video muted="false" autoplay defaultMuted="false" class="video" :hre ref="videos" style="width: 49%; height: 100vh; "></video>
-      <video muted="false" autoplay defaultMuted="false" class="video" ref="video2" style="width: 49%; height: 100vh"></video> -->
+      <div ref="videos" class="box-videos"></div>
     </div>
   </div>
 </template>
@@ -40,7 +36,6 @@ export default {
       video.muted = 'muted';
       video.autoplay = 'autoplay';
       video.srcObject = event.stream;
-      console.log(videos, '+++++++++++++++++++++++++');
       videos.append(video);
     },
     // 接收offer后进行保存和生成answer并发回给投屏端
