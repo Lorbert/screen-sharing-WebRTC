@@ -19,7 +19,7 @@ export const IMListenerMixin = {
         /**
          * @description: 
          * @param {*} uid 自动生成的用户id
-         */        
+         */
         initIM(uid) {
             const IM = new IMSDK.IM()
             IM.init({
@@ -58,8 +58,7 @@ export const IMListenerMixin = {
                             this.addIC(data.msg_body.value)
                             break;
                         case 'disconnect':
-                            console.log('peerConnection', this.peerConnection);
-                            // this.peerConnection.close();
+                            this.removeDom(data.msg_body.value)
                             break;
                     }
 
@@ -89,13 +88,16 @@ export const IMListenerMixin = {
         },
         // 初始化WebRTC    
         rctIn() {
+            let PeerConnection = (window.RTCPeerConnection ||
+                window.webkitRTCPeerConnection ||
+                window.mozRTCPeerConnection);
             const config = {
                 configuration: {
                     offerToReceiveAudio: true,
                     offerToReceiveVideo: true,
                 },
             };
-            this.peerConnection = new RTCPeerConnection(config);
+            this.peerConnection = new PeerConnection(config);
             // 监听视频流
             this.peerConnection.onaddstream = (event) => {
                 this.createVideo(event);

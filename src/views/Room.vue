@@ -59,9 +59,10 @@ export default {
                 }).then(mediaStream => {
                     this.transferStream = mediaStream;
                     mediaStream.oninactive = (event) => {
-                        // console.log('mediaStream oninactive',event)
+                        console.log('mediaStream oninactive------------------',event.target.id)
                         this.isvideo = false;
-                        this.sendMessage('disconnect', null, this.senduid);
+                        const streamid = event.target.id.slice(0,6);
+                        this.sendMessage('disconnect', streamid, this.senduid);
                         this.senduid = null;
                     }
                 })
@@ -88,9 +89,6 @@ export default {
             const remoteDesc = new RTCSessionDescription(answer);
             await this.peerConnection.setRemoteDescription(remoteDesc);
         },
-    },
-    watch: {
-
     }
 };
 </script>
