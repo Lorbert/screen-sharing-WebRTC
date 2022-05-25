@@ -14,7 +14,7 @@
 <script>
 import { IMListenerMixin } from '@/common/mixin'
 export default {
-    name: "Room",
+    name: "Send",
     mixins: [IMListenerMixin],
     data() {
         return {
@@ -58,15 +58,18 @@ export default {
                     audio: true,
                 }).then(mediaStream => {
                     this.transferStream = mediaStream;
+                    // 监听是否结束投屏的回调函数
                     mediaStream.oninactive = (event) => {
                         console.log('mediaStream oninactive------------------',event.target.id)
                         this.isvideo = false;
+                        //视频流id的前六位作为唯一标识
                         const streamid = event.target.id.slice(0,6);
                         this.sendMessage('disconnect', streamid, this.senduid);
                         this.senduid = null;
                     }
                 })
                 console.log(this.transferStream, "mediaStream");
+                // 给本地的RTC保存当前的视频流
                 this.peerConnection.addStream(this.transferStream);
                 this.$refs.video.srcObject = this.transferStream;
                 this.$refs.video.play();
@@ -75,6 +78,7 @@ export default {
                     const offer = await this.peerConnection.createOffer({
                         RTCRtpTransceiver: 1,
                     });
+                    // 将本地的sdp信息保存在本地
                     await this.peerConnection.setLocalDescription(offer);
                     this.sendMessage("sendOffer", offer, this.senduid);
                 } else {

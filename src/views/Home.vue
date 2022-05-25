@@ -21,6 +21,7 @@ export default {
     };
   },
   methods: {
+    // 监听到视频流后创建video
     createVideo(event) {
       console.log(event, '视频流');
       let videos = this.$refs.videos;
@@ -47,6 +48,7 @@ export default {
       await this.peerConnection.setLocalDescription(answer);
       this.sendMessage('sendAnswer', answer, uid);
     },
+    // 移除视频流
     removeDom(streamid) {
       let video = document.getElementById(streamid);
       let videos = this.$refs.videos;

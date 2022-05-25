@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 const Home = () => import('@/views/Home.vue')
-const Room = () => import('@/views/Room.vue')
+const Send = () => import('@/views/Send.vue')
 
 Vue.use(VueRouter)
 
@@ -12,9 +12,9 @@ const routes = [
     component: Home
   },
   {
-    path:'/room',
-    name:'room',
-    component: Room
+    path:'/send',
+    name:'send',
+    component: Send
   }
 ]
 
